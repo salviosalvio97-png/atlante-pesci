@@ -1,7 +1,7 @@
-const V="pesci-v6",IMG="pesci-foto-v1";
+const V="pesci-v7",IMG="pesci-foto-v1";
 const SHELL=["./","./index.html","./manifest.webmanifest","./icon-192-foto.png","./icon-512-foto.png","./icon-maskable-512-foto.png","./apple-touch-icon-foto.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V&&x!==IMG).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith("pesci-")&&x!==V&&x!==IMG).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 const cacheFirst=(req,name)=>caches.match(req).then(r=>r||fetch(req).then(n=>{if(n.ok){const cp=n.clone();caches.open(name).then(c=>c.put(req,cp))}return n}));
 self.addEventListener("fetch",e=>{
   const req=e.request;if(req.method!=="GET")return;
