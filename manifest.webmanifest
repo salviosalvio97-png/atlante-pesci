@@ -1,7 +1,7 @@
 {
   "name": "Atlante dei pesci",
   "short_name": "Pesci",
-  "description": "Oltre 200 specie ittiche di mare e d'acqua dolce: habitat, alimentazione, dimensioni, esche e tecniche di pesca. Funziona anche offline.",
+  "description": "Oltre 200 specie ittiche di mare e d'acqua dolce e più di 40 molluschi: habitat, alimentazione, dimensioni, esche e tecniche di pesca. Funziona anche offline.",
   "lang": "it",
   "start_url": "./index.html",
   "scope": "./",

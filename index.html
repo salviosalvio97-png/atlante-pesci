@@ -26,6 +26,10 @@
 --sea:#0f3550;--sea2:#1f6f8b;--riv:#1d4a3c;--riv2:#3f8f6b;--acc:var(--sea2);--head:var(--sea);
 --warn:light-dark(#fff3e8,#2a1d12);--warnk:light-dark(#8a3d06,#ffc28a)}
 :root[data-sec=d]{--acc:var(--riv2);--head:var(--riv)}
+:root[data-sec=x]{--acc:#8a5a78;--head:#3d2a3f}
+.secnote{background:var(--warn);border:1px solid light-dark(#f1cfae,#5a3a1c);border-radius:14px;padding:12px 16px;margin:0 0 12px;font-size:15.5px}
+.secnote b{color:var(--warnk)}
+.fam h2 em{display:block;width:100%;font:600 12.5px/1.2 "Source Sans 3",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.55 "Source Sans 3",system-ui,sans-serif;overflow-x:clip}
 a{color:light-dark(color-mix(in srgb,var(--acc) 85%,#000),color-mix(in srgb,var(--acc) 60%,#fff))}
@@ -123,6 +127,7 @@ progress{width:100%;height:10px;margin-top:10px;accent-color:var(--acc)}
   <nav class="tabs" aria-label="Sezioni">
    <a href="#mare" data-v="m">Acque salate <small id="nm"></small></a>
    <a href="#dolce" data-v="d">Acque dolci <small id="nd"></small></a>
+   <a href="#molluschi" data-v="x">Molluschi <small id="nx"></small></a>
    <a href="#info" data-v="info">Info</a>
   </nav>
  </div>
@@ -134,6 +139,7 @@ progress{width:100%;height:10px;margin-top:10px;accent-color:var(--acc)}
    <input id="q" type="search" placeholder="Cerca per nome, nome scientifico o famiglia" aria-label="Cerca">
    <select id="fFam" aria-label="Famiglia"></select>
   </div>
+  <div class="secnote" id="secnote" hidden><b>Prima di raccogliere e mangiare molluschi.</b> Cozze, vongole, ostriche e altri bivalvi filtrano l'acqua e trattengono batteri, virus (epatite A, norovirus) e tossine delle alghe, che la cottura non sempre elimina. Mangia solo quelli che provengono da zone controllate o venduti con l'etichetta sanitaria. La raccolta è vietata in molte aree (porti, foci, scarichi) e ha misure minime e limiti giornalieri: informati alla Capitaneria di porto o al Comune. Il dattero di mare e la nacchera sono protetti.</div>
   <p class="count" id="count"></p>
   <div id="list"></div>
  </section>
@@ -142,7 +148,7 @@ progress{width:100%;height:10px;margin-top:10px;accent-color:var(--acc)}
 
  <section class="view" id="v-info">
   <h2 class="vh">Informazioni</h2>
-  <p class="lead">L'atlante raccoglie <b id="tot"></b> specie tra le più conosciute e pescate, divise tra acque salate e acque dolci e raggruppate per famiglia. Per ogni specie trovi descrizione, habitat, alimentazione, dimensioni, esche e tecniche di pesca da terra e da barca.</p>
+  <p class="lead">L'atlante raccoglie <b id="tot"></b> specie tra le più conosciute e pescate, divise tra acque salate, acque dolci e molluschi e raggruppate per famiglia. Per ogni specie trovi descrizione, habitat, alimentazione, dimensioni, esche e tecniche di pesca da terra e da barca.</p>
   <div class="boxes">
    <section>
     <h3>Usarla senza rete</h3>
@@ -2027,10 +2033,389 @@ t:"Spinning dalle rocce nelle rapide.",
 b:"Casting e pesca col vivo nelle correnti."}
 );
 
+/* MOLLUSCHI: famiglie e specie (a:"x") */
+Object.assign(FAM,{
+loliginidae:{n:"Loliginidi",d:"I calamari veri: corpo a siluro con due pinne triangolari, otto braccia e due tentacoli lunghi con ventose dentate; vivono vicino alla costa e alla piattaforma continentale.",sh:"cal",cl:"Cefalopodi"},
+ommastrephidae:{n:"Ommastrefidi",d:"I totani: calamari d'altura muscolosi, con pinne romboidali all'estremità del mantello; salgono in superficie di notte.",sh:"cal",cl:"Cefalopodi"},
+sepiidae:{n:"Sepiidi",d:"Le seppie: corpo ovale appiattito con una pinna che corre lungo tutto il mantello e un osso interno calcareo (l'osso di seppia); cambiano colore in un istante.",sh:"sep",cl:"Cefalopodi"},
+sepiolidae:{n:"Sepiolidi",d:"Le seppioline: minuscoli cefalopodi dal corpo tondeggiante con due pinne laterali simili a orecchie.",sh:"sep",cl:"Cefalopodi"},
+octopodidae:{n:"Octopodidi",d:"I polpi e i moscardini: otto braccia senza tentacoli, corpo a sacco senza conchiglia; intelligentissimi, vivono nelle tane.",sh:"pol",cl:"Cefalopodi"},
+mytilidae:{n:"Mitilidi",d:"Cozze e datteri: bivalvi allungati che si attaccano agli scogli con il bisso o scavano gallerie nella roccia.",sh:"cozza",cl:"Bivalvi",biv:1},
+veneridae:{n:"Veneridi",d:"Vongole, fasolari e tartufi: bivalvi tondeggianti che vivono infossati nella sabbia o nel fango e filtrano l'acqua con due sifoni.",sh:"biv",cl:"Bivalvi",biv:1},
+ostreidae:{n:"Ostreidi",d:"Le ostriche: valve irregolari e spesse, la sinistra cementata alla roccia o ad altre conchiglie.",sh:"ost",cl:"Bivalvi",biv:1},
+pectinidae:{n:"Pettinidi",d:"Capesante e canestrelli: conchiglie a ventaglio con le \"orecchiette\" vicino alla cerniera; nuotano a scatti chiudendo le valve.",sh:"pet",cl:"Bivalvi",biv:1},
+cardiidae:{n:"Cardidi",d:"I cuori: conchiglie rigonfie a coste radiali, viste di lato a forma di cuore; vivono appena sotto la sabbia.",sh:"biv",cl:"Bivalvi",biv:1},
+solenidae:{n:"Solenidi",d:"I cannolicchi: conchiglie lunghe e dritte come un astuccio, aperte alle due estremità; scavano tane verticali nella sabbia.",sh:"can",cl:"Bivalvi",biv:1},
+pharidae:{n:"Faridi",d:"I cannelli: simili ai cannolicchi ma più grandi e leggermente curvi; vivono nella sabbia delle spiagge battute.",sh:"can",cl:"Bivalvi",biv:1},
+donacidae:{n:"Donacidi",d:"Le telline: piccoli bivalvi lucidi e triangolari che vivono nella sabbia della battigia, dove frange l'onda.",sh:"biv",cl:"Bivalvi",biv:1},
+arcidae:{n:"Arcidi",d:"I mussoli: conchiglie a forma di barchetta con la cerniera dritta e lunga; vivono attaccati agli scogli.",sh:"cozza",cl:"Bivalvi",biv:1},
+glycymerididae:{n:"Glicimeridi",d:"I piè d'asino: conchiglie spesse e quasi circolari, con una cerniera a tanti piccoli denti.",sh:"biv",cl:"Bivalvi",biv:1},
+pinnidae:{n:"Pinnidi",d:"Le nacchere: i bivalvi più grandi del Mediterraneo, a forma di prosciutto, infissi verticalmente nel fondo.",sh:"can",cl:"Bivalvi"},
+muricidae:{n:"Muricidi",d:"I murici (garusoli, sconcigli): gasteropodi predatori con conchiglia spinosa, che perforano le conchiglie di altri molluschi.",sh:"gas",cl:"Gasteropodi"},
+nassariidae:{n:"Nassaridi",d:"Lumachini e bombetti: piccoli gasteropodi spazzini che fiutano le carcasse sul fondo sabbioso.",sh:"gas",cl:"Gasteropodi"},
+buccinidae:{n:"Buccinidi",d:"I buccini: grandi gasteropodi spazzini e predatori dei mari freddi.",sh:"gas",cl:"Gasteropodi"},
+patellidae:{n:"Patellidi",d:"Le patelle: conchiglia a cono basso, saldamente attaccata agli scogli della fascia di marea.",sh:"pat",cl:"Gasteropodi"},
+haliotidae:{n:"Aliotidi",d:"Le orecchie di mare (abaloni): conchiglia piatta a orecchio con una fila di fori, interno di madreperla.",sh:"pat",cl:"Gasteropodi"},
+trochidae:{n:"Trochidi",d:"Le chiocciole marine a trottola: piccole conchiglie coniche che brucano le alghe sugli scogli.",sh:"gas",cl:"Gasteropodi"},
+littorinidae:{n:"Littorinidi",d:"Le littorine (chiocciole di scoglio): piccoli gasteropodi della fascia di marea, capaci di restare a lungo fuori dall'acqua.",sh:"gas",cl:"Gasteropodi"}
+});
+D.push(
+/* --- cefalopodi --- */
+{a:"x",f:"loliginidae",n:"Calamaro",al:"calamaro comune, totanetto (impropriamente)",s:"Loligo vulgaris",
+d:"Mantello lungo e affusolato, rosato e trasparente con puntini rosso-bruni (cromatofori), pinne triangolari che occupano due terzi del corpo. Carne tenera e pregiatissima.",
+h:"Acque costiere e di piattaforma fino a 500 m; in autunno e inverno si avvicina alla costa per riprodursi, deponendo grappoli di uova bianche. Caccia al tramonto e di notte, attratto dalle luci.",
+c:"Pesci (acciughe, sardine, latterini), gamberi e altri calamari.",
+z:"Mantello fino a circa 60 cm nei maschi; comune tra 15 e 30 cm.",
+e:"Totanare e egi (esche artificiali a forma di gamberetto con corona di aghi), totanare luminose; pesciolino vivo o morto su totanara a gabbia.",
+t:"Eging (lancio e recupero a scatti della egi) da moli, porti e scogliere al tramonto e di notte, in autunno-inverno; bolognese con pesciolino morto e totanara.",
+b:"Eging dalla barca su fondali di sabbia e prateria; tip-run eging (egi zavorrate trascinate alla deriva); bolentino con totanare sotto le luci."},
+{a:"x",f:"loliginidae",n:"Calamaro atlantico",al:"calamaro veronese",s:"Loligo forbesii",
+d:"Calamaro grande simile al comune, con pinne a rombo più ampie e colori rossastri.",
+h:"Atlantico nord-orientale e Mediterraneo occidentale, su fondali tra 50 e 400 m.",
+c:"Pesci e crostacei.",
+z:"Mantello fino a 90 cm; comune tra 20 e 40 cm.",
+e:"Egi, totanare, pesce.",
+t:"Eging dalle scogliere profonde dell'Atlantico.",
+b:"Eging e tip-run dalla barca."},
+{a:"x",f:"loliginidae",n:"Calamaretto",al:"calamaretto, calamaretti spillo",s:"Alloteuthis media",
+d:"Piccolo calamaro con la coda appuntita, trasparente e rosato.",
+h:"Fondali sabbiosi e fangosi costieri tra 10 e 200 m, in gruppi.",
+c:"Piccoli crostacei e larve di pesce.",
+z:"Mantello fino a 12 cm; comune tra 5 e 8 cm.",
+e:"Piccole egi e totanare.",
+t:"Eging leggero da moli e porti di notte.",
+b:"Bolentino con piccole totanare."},
+{a:"x",f:"ommastrephidae",n:"Totano",al:"totano viola grande, totano comune",s:"Todarodes sagittatus",
+d:"Calamaro d'altura dal mantello muscoloso rosso-violaceo, con pinne a rombo all'estremità e tentacoli robusti.",
+h:"Acque libere e fondali di scarpata tra 100 e 1000 m; di notte sale verso la superficie, dove si pesca sotto le luci (\"pesca dei totani\" nel Tirreno e in Liguria).",
+c:"Pesci (sardine, sgombri, acciughe), crostacei, altri cefalopodi.",
+z:"Mantello fino a 75 cm; comune tra 20 e 40 cm.",
+e:"Totanare luminose o con luci chimiche, egi; striscia di sarda.",
+t:"Eging notturno da scogliere a picco su fondali profondi.",
+b:"Pesca notturna alla deriva con totanare luminose sotto le luci, a varie profondità; vertical eging."},
+{a:"x",f:"ommastrephidae",n:"Totano viola",al:"totanetto",s:"Illex coindetii",
+d:"Totano piccolo rosso-bruno, con pinne a rombo e mantello sottile.",
+h:"Fondali di piattaforma e scarpata tra 50 e 600 m; comunissimo nel Mediterraneo.",
+c:"Pesci e crostacei.",
+z:"Mantello fino a 37 cm; comune tra 12 e 25 cm.",
+e:"Totanare luminose, egi.",
+t:"Raro da terra.",
+b:"Pesca notturna con totanare alla deriva."},
+{a:"x",f:"ommastrephidae",n:"Totano gigante del Pacifico",al:"calamaro di Humboldt, jumbo squid",s:"Dosidicus gigas",
+d:"Il calamaro più grande pescato con la canna: rosso fiammante, muscoloso e aggressivo, cambia colore come un lampeggiante.",
+h:"Pacifico orientale, dalla California al Cile, in branchi; sale in superficie di notte.",
+c:"Pesci lanterna, sardine, altri calamari (anche i propri simili).",
+z:"Mantello fino a 1,2 m e 50 kg.",
+e:"Grandi totanare luminose, jig.",
+t:"Non praticabile da terra.",
+b:"Pesca notturna con jig luminosi nel Golfo di California e in Perù."},
+{a:"x",f:"sepiidae",n:"Seppia",al:"seppia comune",s:"Sepia officinalis",
+d:"Corpo ovale appiattito, bruno con striature zebrate chiare e scure; una pinna sottile corre lungo tutto il mantello. Ha un osso interno calcareo e un sacco d'inchiostro nero.",
+h:"Fondali sabbiosi, fangosi e praterie di posidonia fino a 200 m; in primavera si avvicina a riva e nelle lagune per deporre le uova nere sulle piante e sugli oggetti sommersi.",
+c:"Gamberi, granchi e piccoli pesci, che cattura con i tentacoli.",
+z:"Mantello fino a 49 cm e 4 kg; comune tra 12 e 25 cm.",
+e:"Egi colorate, seppiare a forma di pesce; seppia femmina come richiamo (tradizionale), pesciolino morto su totanara.",
+t:"Eging lento sul fondo da moli, spiagge e scogliere, soprattutto in primavera e autunno, all'alba e al tramonto.",
+b:"Eging e tip-run su sabbia e praterie; traina lentissima con seppiara."},
+{a:"x",f:"sepiidae",n:"Seppia pizzuta",al:"seppia elegante",s:"Sepia orbignyana",
+d:"Piccola seppia rosa-arancio con una punta aguzza all'estremità del mantello.",
+h:"Fondali sabbiosi e fangosi tra 50 e 450 m.",
+c:"Piccoli crostacei e pesci.",
+z:"Mantello fino a 12 cm.",
+e:"Piccole egi.",
+t:"Rara da terra.",
+b:"Catture occasionali con egi sul fondo."},
+{a:"x",f:"sepiidae",n:"Seppia gigante australiana",al:"giant cuttlefish",s:"Sepia apama",
+d:"La seppia più grande del mondo, con ampie pinne a frangia e colori spettacolari durante il corteggiamento.",
+h:"Scogliere e praterie dell'Australia meridionale; in inverno si raduna a migliaia per riprodursi.",
+c:"Pesci e crostacei.",
+z:"Mantello fino a 50 cm e oltre 10 kg.",
+e:"Egi grandi.",
+t:"Eging dai moli australiani.",
+b:"Eging su scogliere e praterie.",
+x:"Nelle aree di riproduzione la cattura è vietata."},
+{a:"x",f:"sepiolidae",n:"Seppiola",al:"seppiolina, sepiola",s:"Sepiola rondeletii",
+d:"Minuscolo cefalopode tondeggiante con due pinne arrotondate simili a orecchie.",
+h:"Fondali sabbiosi e fangosi costieri, sepolta di giorno; vive in simbiosi con batteri luminosi.",
+c:"Piccoli gamberi.",
+z:"Mantello fino a 6 cm.",
+e:"Si cattura soprattutto con reti; occasionalmente con piccolissime egi.",
+t:"Poco praticata.",
+b:"Poco praticata."},
+{a:"x",f:"octopodidae",n:"Polpo",al:"polpo verace, polipo, purpo",s:"Octopus vulgaris",
+d:"Otto braccia con due file di ventose, corpo a sacco senza conchiglia, pelle che cambia colore e forma (papille) in un attimo. È tra gli invertebrati più intelligenti.",
+h:"Fondali rocciosi, misti e di prateria da pochi centimetri a 200 m; vive in tane riconoscibili per i gusci vuoti all'ingresso. Esce a caccia soprattutto all'alba, al tramonto e di notte.",
+c:"Granchi, gamberi, bivalvi, gasteropodi e pesci.",
+z:"Fino a 1,3 m di lunghezza totale e circa 10 kg; comune tra 0,5 e 3 kg.",
+e:"Polpara (piombo con ami e granchio o pesce legato sopra), polpara artificiale colorata, egi da polpo (octopus jig), seppia o granchio finto.",
+t:"Polpara lanciata e trascinata sul fondo da scogliere e moli; octopus jig; mano o rampino in acqua bassa dove consentito.",
+b:"Polpara alla deriva lenta su fondali rocciosi e misti (\"bolentino a polpi\"); octopus jigging.",
+x:"Rispetta le misure o i pesi minimi locali e i periodi di fermo; in alcune regioni la pesca del polpo è regolamentata."},
+{a:"x",f:"octopodidae",n:"Moscardino bianco",al:"moscardino",s:"Eledone cirrhosa",
+d:"Piccolo polpo rossastro con una sola fila di ventose per braccio.",
+h:"Fondali fangosi e sabbiosi tra 50 e 500 m.",
+c:"Granchi e altri crostacei.",
+z:"Fino a 40 cm di lunghezza totale; comune tra 15 e 25 cm.",
+e:"Polpara con granchio, octopus jig.",
+t:"Raro da terra.",
+b:"Polpara su fondali fangosi profondi."},
+{a:"x",f:"octopodidae",n:"Moscardino muschiato",al:"moscardino, folpo",s:"Eledone moschata",
+d:"Piccolo polpo grigio-bruno con macchie scure e una sola fila di ventose; emana un caratteristico odore di muschio.",
+h:"Fondali sabbiosi e fangosi costieri tra 10 e 300 m; comune in Adriatico.",
+c:"Granchi, gamberi, bivalvi.",
+z:"Fino a 40 cm di lunghezza totale; comune tra 15 e 25 cm.",
+e:"Polpara con granchio, octopus jig.",
+t:"Polpara da moli su fondo sabbioso.",
+b:"Polpara su sabbia e fango."},
+{a:"x",f:"octopodidae",n:"Polpo macropode",al:"polpo dalle braccia lunghe",s:"Callistoctopus macropus",
+d:"Polpo rosso con macchie bianche e braccia lunghissime e sottili.",
+h:"Fondali sabbiosi e di prateria, attivo soprattutto di notte.",
+c:"Crostacei e pesci.",
+z:"Fino a 1,5 m di lunghezza totale (quasi tutta braccia).",
+e:"Polpara, octopus jig.",
+t:"Polpara notturna.",
+b:"Polpara notturna su sabbia e praterie."},
+{a:"x",f:"octopodidae",n:"Polpo gigante del Pacifico",al:"giant Pacific octopus",s:"Enteroctopus dofleini",
+d:"Il polpo più grande del mondo, rosso-bruno con pelle rugosa.",
+h:"Fondali rocciosi del Pacifico settentrionale (Alaska, Canada, Giappone, Corea), fino a 1500 m.",
+c:"Granchi, molluschi, pesci.",
+z:"Fino a oltre 4 m di apertura delle braccia e circa 50 kg.",
+e:"Granchi, pesce, grossi octopus jig.",
+t:"Possibile dalle scogliere del Pacifico.",
+b:"Pesca a fondo su scogliere e relitti.",
+x:"In molte zone è regolamentato o protetto."},
+/* --- bivalvi --- */
+{a:"x",f:"mytilidae",n:"Cozza",al:"mitilo, muscolo, peocio",s:"Mytilus galloprovincialis",
+d:"Conchiglia allungata e triangolare, nero-bluastra all'esterno e madreperlacea all'interno; si attacca alle superfici con un ciuffo di filamenti (bisso).",
+h:"Scogli, moli, pali e piattaforme dalla fascia di marea fino a 40 m, in banchi fittissimi; allevata in tutta Italia (mitilicoltura).",
+c:"Plancton e particelle organiche filtrate dall'acqua.",
+z:"Fino a 15 cm; comune tra 5 e 8 cm.",
+e:"Non si pesca con esca: si raccoglie a mano. È a sua volta un'ottima esca per orate, saraghi e mormore.",
+t:"Raccolta a mano dagli scogli e dai moli, dove consentita.",
+b:"Raccolta in apnea su scogli e pali."},
+{a:"x",f:"mytilidae",n:"Cozza pelosa",al:"modiolo, cozza barbuta",s:"Modiolus barbatus",
+d:"Simile a una piccola cozza, bruno-rossastra e ricoperta di peli (periostraco) a ciuffi.",
+h:"Scogli, fondali detritici e coralligeni fino a 100 m; in Puglia è una prelibatezza.",
+c:"Plancton filtrato.",
+z:"Fino a 9 cm.",
+e:"Non si pesca con esca: si raccoglie a mano.",
+t:"Raccolta a mano sugli scogli bassi.",
+b:"Raccolta in apnea."},
+{a:"x",f:"mytilidae",n:"Dattero di mare",al:"dattero",s:"Lithophaga lithophaga",
+d:"Conchiglia allungata e cilindrica bruno-dorata come un dattero; vive dentro gallerie che scava nella roccia calcarea con secrezioni acide.",
+h:"Scogliere calcaree da pochi metri a 30 m; cresce lentissimamente (decenni per raggiungere la taglia adulta).",
+c:"Plancton filtrato.",
+z:"Fino a 12 cm.",
+e:"Nessuna: specie protetta.",
+t:"Raccolta vietata.",
+b:"Raccolta vietata.",
+x:"Raccolta, vendita, detenzione e consumo sono vietati in Italia e nell'UE: per estrarlo bisogna demolire la scogliera, distruggendo interi ecosistemi. Le sanzioni sono anche penali."},
+{a:"x",f:"veneridae",n:"Vongola verace",al:"vongola verace nostrana, caparozzolo",s:"Ruditapes decussatus",
+d:"Conchiglia ovale con fitte linee incrociate a reticolo, colori variabili; i due sifoni sono separati per tutta la lunghezza.",
+h:"Fondali sabbiosi e fangosi di lagune, stagni costieri e baie riparate, infossata a pochi centimetri.",
+c:"Plancton filtrato.",
+z:"Fino a 8 cm; comune tra 3,5 e 5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano o con il rastrello nelle lagune, dove consentita (spesso vietata o in concessione).",
+b:"Raccolta con rastrello da natante in laguna, solo dove autorizzata."},
+{a:"x",f:"veneridae",n:"Vongola filippina",al:"vongola verace (in commercio)",s:"Ruditapes philippinarum",
+d:"Simile alla verace nostrana, ma con i sifoni uniti alla base e disegni più variabili; introdotta dall'Indo-Pacifico.",
+h:"Lagune e foci dell'Alto Adriatico (Venezia, Sacca di Goro, Delta del Po), dove è allevata e dominante.",
+c:"Plancton filtrato.",
+z:"Fino a 7,5 cm; comune tra 3 e 4,5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano o con il rastrello, solo dove consentita.",
+b:"Raccolta con rastrello o draga, solo con autorizzazione.",
+x:"Specie alloctona."},
+{a:"x",f:"veneridae",n:"Lupino",al:"vongola comune, vongola adriatica",s:"Chamelea gallina",
+d:"Piccola vongola triangolare con coste concentriche e disegni bruni a zig-zag.",
+h:"Fondali sabbiosi costieri tra 2 e 15 m; abbondantissima in Adriatico, dove si pesca con le turbosoffianti.",
+c:"Plancton filtrato.",
+z:"Fino a 4,5 cm; comune tra 2,5 e 3,5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta con rastrello a mano sulla battigia, dove consentita.",
+b:"Pesca professionale con draghe idrauliche."},
+{a:"x",f:"veneridae",n:"Fasolaro",al:"cappa liscia, issolone",s:"Callista chione",
+d:"Grande bivalve ovale, liscio e lucido, bruno-rossastro con raggi più scuri.",
+h:"Fondali sabbiosi puliti tra 5 e 150 m.",
+c:"Plancton filtrato.",
+z:"Fino a 10 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta in acqua bassa, rara.",
+b:"Raccolta in apnea su sabbia; pesca professionale con draga."},
+{a:"x",f:"veneridae",n:"Tartufo di mare",al:"noce di mare, cappa verrucosa",s:"Venus verrucosa",
+d:"Bivalve tondo e spesso con coste concentriche rilevate e piene di tubercoli.",
+h:"Fondali sabbiosi e ghiaiosi vicino agli scogli, tra 1 e 100 m.",
+c:"Plancton filtrato.",
+z:"Fino a 7 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano in acqua bassa.",
+b:"Raccolta in apnea."},
+{a:"x",f:"ostreidae",n:"Ostrica piatta",al:"ostrica europea",s:"Ostrea edulis",
+d:"Valve tondeggianti, piatte e lamellose, grigio-brune; l'ostrica autoctona d'Europa.",
+h:"Fondali duri e banchi di conchiglie, lagune e baie fino a 80 m; oggi rara in natura e soprattutto allevata.",
+c:"Plancton filtrato.",
+z:"Fino a 11 cm (eccezionalmente 20).",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano, dove consentita.",
+b:"Raccolta in apnea."},
+{a:"x",f:"ostreidae",n:"Ostrica concava",al:"ostrica giapponese, ostrica del Pacifico",s:"Magallana gigas",
+d:"Ostrica allungata e irregolare con valve profonde e lamelle sporgenti; introdotta dal Pacifico, oggi la più allevata al mondo.",
+h:"Scogli, moli e lagune; si è diffusa in natura anche nelle lagune italiane.",
+c:"Plancton filtrato.",
+z:"Fino a 30 cm; comune tra 8 e 15 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano, dove consentita.",
+b:"Raccolta in apnea.",
+x:"Specie alloctona."},
+{a:"x",f:"pectinidae",n:"Capasanta",al:"cappasanta, conchiglia di San Giacomo",s:"Pecten jacobaeus",
+d:"Conchiglia a ventaglio con 14-16 coste larghe: valva superiore piatta, inferiore convessa. Muscolo bianco e corallo arancio molto pregiati.",
+h:"Fondali sabbiosi e detritici tra 25 e 250 m; comune nell'Alto Adriatico.",
+c:"Plancton filtrato.",
+z:"Fino a 15 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Non praticabile da terra.",
+b:"Raccolta in apnea o con le bombole dove consentita; pesca professionale con rapido.",
+x:"Esiste una misura minima e in molte zone la raccolta subacquea è regolamentata."},
+{a:"x",f:"pectinidae",n:"Canestrello",al:"pettine, smeriglio",s:"Aequipecten opercularis",
+d:"Piccola capasanta con valve entrambe convesse, colorate di rosso, arancio o viola.",
+h:"Fondali sabbiosi e ghiaiosi tra 20 e 200 m.",
+c:"Plancton filtrato.",
+z:"Fino a 9 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Non praticabile da terra.",
+b:"Raccolta in apnea; pesca professionale con draghe."},
+{a:"x",f:"cardiidae",n:"Cuore edule",al:"cuore, cuore di mare, capatonda",s:"Cerastoderma edule",
+d:"Conchiglia rigonfia color crema con 22-28 coste radiali; vista di lato ha la forma di un cuore.",
+h:"Sabbie fangose della fascia di marea e delle lagune, appena sotto la superficie; molto comune in Atlantico (in Mediterraneo vive la specie affine C. glaucum).",
+c:"Plancton filtrato.",
+z:"Fino a 5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano o con rastrello con la bassa marea.",
+b:"Poco praticata."},
+{a:"x",f:"solenidae",n:"Cannolicchio",al:"cannolicchio, cappalunga",s:"Solen marginatus",
+d:"Conchiglia lunga e dritta come un astuccio, giallo-bruna, aperta alle due estremità; un solco vicino al bordo anteriore lo distingue dal cannello.",
+h:"Sabbie fangose costiere e lagunari, dalla fascia di marea a pochi metri; sta infossato in una tana verticale e si ritira rapidamente se disturbato.",
+c:"Plancton filtrato.",
+z:"Fino a 13 cm.",
+e:"Si cattura versando un pizzico di sale nel foro della tana: il cannolicchio risale e si afferra. È un'esca eccellente per orate e saraghi.",
+t:"Raccolta con il sale o con l'apposito ferro in acqua bassa.",
+b:"Raccolta in apnea; pesca professionale con draga idraulica."},
+{a:"x",f:"pharidae",n:"Cannello",al:"cannolicchio atlantico, coltello",s:"Ensis siliqua",
+d:"Il più grande dei cannolicchi, leggermente curvo, lucido e color oliva-bruno.",
+h:"Sabbie pulite delle spiagge esposte, dalla bassa marea a 20 m.",
+c:"Plancton filtrato.",
+z:"Fino a 20 cm.",
+e:"Si cattura con il sale nella tana. È un'ottima esca per spigole e mormore.",
+t:"Raccolta con il sale con la bassa marea.",
+b:"Raccolta in apnea."},
+{a:"x",f:"donacidae",n:"Tellina",al:"arsella, zigolo, cozzola",s:"Donax trunculus",
+d:"Piccolo bivalve allungato e triangolare, liscio e lucido, giallo, rosa o viola all'interno.",
+h:"Sabbia della battigia, dove si rompe l'onda, fino a 2-3 m; tipica delle spiagge tirreniche e adriatiche.",
+c:"Plancton filtrato.",
+z:"Fino a 4,5 cm; comune tra 2,5 e 3,5 cm.",
+e:"Non si pesca con esca: si raccoglie. Ottima esca per mormore e orate.",
+t:"Raccolta con la rete a rastrello trascinata camminando a riva (\"tellinara\"), dove consentita.",
+b:"Poco praticata.",
+x:"Esistono una misura minima e limiti di raccolta; in alcune zone è vietata per motivi sanitari."},
+{a:"x",f:"arcidae",n:"Mussolo",al:"arca di Noè, mussolo",s:"Arca noae",
+d:"Conchiglia a forma di barchetta, bruna a strisce zigzag, con una cerniera lunga e dritta.",
+h:"Scogli e fondali duri da pochi metri a 100 m, attaccata con il bisso; apprezzata cruda in Puglia e Dalmazia.",
+c:"Plancton filtrato.",
+z:"Fino a 9 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano sugli scogli bassi.",
+b:"Raccolta in apnea."},
+{a:"x",f:"glycymerididae",n:"Piè d'asino",al:"pié d'asino, mandorla di mare",s:"Glycymeris glycymeris",
+d:"Conchiglia spessa e quasi circolare, bruno-rossastra a zone concentriche, con una cerniera a tanti piccoli denti.",
+h:"Fondali sabbiosi e ghiaiosi tra 5 e 100 m.",
+c:"Plancton filtrato.",
+z:"Fino a 8 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta rara da riva.",
+b:"Raccolta in apnea; pesca professionale con draga."},
+{a:"x",f:"pinnidae",n:"Nacchera",al:"pinna nobile, astura",s:"Pinna nobilis",
+d:"Il più grande bivalve del Mediterraneo: conchiglia a forma di prosciutto infissa verticalmente nel fondo, con un bisso dorato un tempo usato per tessere la \"seta di mare\".",
+h:"Praterie di posidonia e fondali sabbiosi tra 1 e 60 m.",
+c:"Plancton filtrato.",
+z:"Fino a 1,2 m.",
+e:"Nessuna: specie protetta.",
+t:"Raccolta vietata.",
+b:"Raccolta vietata.",
+x:"Specie in pericolo critico e rigorosamente protetta: dal 2016 un parassita ha ucciso quasi tutte le popolazioni del Mediterraneo. Non toccarla; se ne vedi una viva puoi segnalarla ai centri di ricerca (ad esempio all'ISPRA)."},
+/* --- gasteropodi --- */
+{a:"x",f:"muricidae",n:"Murice spinoso",al:"garusolo, sconciglio, ragusa",s:"Bolinus brandaris",
+d:"Conchiglia a clava con un lungo canale dritto e file di spine; da essa i Fenici ricavavano la porpora.",
+h:"Fondali sabbiosi e fangosi da pochi metri a 150 m; predatore di bivalvi.",
+c:"Cozze, vongole e altri bivalvi, che perfora o apre forzando le valve; carcasse.",
+z:"Fino a 9 cm.",
+e:"Si cattura con nasse innescate con pesce, cozze o granchi.",
+t:"Raccolta a mano in acqua bassa o con piccole nasse dal molo.",
+b:"Nasse innescate calate sul fondo."},
+{a:"x",f:"muricidae",n:"Murice troncato",al:"garusolo, sconciglio",s:"Hexaplex trunculus",
+d:"Conchiglia robusta e tozza con coste e spine corte, bruno-violacea a bande.",
+h:"Scogli e fondali misti dalla fascia di marea a 100 m; comune nelle lagune.",
+c:"Bivalvi, cirripedi, carcasse.",
+z:"Fino a 10 cm.",
+e:"Nasse innescate con pesce o cozze.",
+t:"Raccolta a mano sugli scogli e in laguna.",
+b:"Nasse calate sul fondo."},
+{a:"x",f:"nassariidae",n:"Lumachino",al:"bombetto, lumachino di mare",s:"Tritia mutabilis",
+d:"Piccola conchiglia a spirale liscia e lucida, color crema con macchie brune.",
+h:"Fondali sabbiosi costieri fino a 30 m, abbondante in Adriatico; esce dalla sabbia fiutando le carcasse.",
+c:"Carcasse e animali morti.",
+z:"Fino a 3,5 cm.",
+e:"Nasse o sacchetti innescati con pesce.",
+t:"Raccolta con piccole nasse dal molo.",
+b:"Nasse sul fondo sabbioso."},
+{a:"x",f:"buccinidae",n:"Buccino",al:"buccino atlantico, whelk",s:"Buccinum undatum",
+d:"Grande conchiglia a spirale bianco-grigia con coste ondulate; le uova formano masse spugnose spesso spiaggiate.",
+h:"Fondali sabbiosi e fangosi del Nord Atlantico, dalla bassa marea a 200 m.",
+c:"Carcasse, vermi, bivalvi.",
+z:"Fino a 11 cm (eccezionalmente 15).",
+e:"Nasse innescate con pesce.",
+t:"Raccolta a mano con la bassa marea.",
+b:"Nasse sul fondo."},
+{a:"x",f:"patellidae",n:"Patella",al:"patella, lampada, cozzolo",s:"Patella caerulea",
+d:"Conchiglia a cono basso con coste irregolari, grigio-verdastra; si attacca agli scogli con un piede muscoloso fortissimo.",
+h:"Scogli della fascia di marea e appena sotto il pelo dell'acqua; torna sempre nello stesso punto della roccia.",
+c:"Alghe raschiate dagli scogli.",
+z:"Fino a 6 cm.",
+e:"Si stacca con un colpo deciso o con una lama. È un'ottima esca per saraghi e tordi.",
+t:"Raccolta a mano sugli scogli, dove consentita.",
+b:"Non praticata.",
+x:"Non confonderla con la patella ferruginea (Patella ferruginea), rarissima e rigorosamente protetta. In molte zone la raccolta è limitata."},
+{a:"x",f:"haliotidae",n:"Orecchia di mare",al:"orecchia di Venere, abalone",s:"Haliotis tuberculata",
+d:"Conchiglia piatta a forma di orecchio con una fila di fori respiratori; l'interno è di madreperla iridescente.",
+h:"Sotto i massi e nelle fessure degli scogli, da pochi metri a 40 m; notturna.",
+c:"Alghe.",
+z:"Fino a 12 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano sotto i sassi in acqua bassa, dove consentita.",
+b:"Raccolta in apnea.",
+x:"Specie a crescita lenta e sovrasfruttata: rispetta le misure minime e i divieti locali."},
+{a:"x",f:"trochidae",n:"Chiocciola marina",al:"monodonta, occhio di bue, caragolo",s:"Phorcus turbinatus",
+d:"Piccola conchiglia conica a trottola, grigio-verde con macchie scure a scacchiera e interno madreperlaceo.",
+h:"Scogli della fascia di marea in tutto il Mediterraneo.",
+c:"Alghe e pellicola organica degli scogli.",
+z:"Fino a 3,5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano sugli scogli.",
+b:"Non praticata."},
+{a:"x",f:"littorinidae",n:"Littorina",al:"chiocciola di scoglio, periwinkle",s:"Littorina littorea",
+d:"Piccola conchiglia a spirale grigio-scura con fini righe, molto comune nei mari del Nord.",
+h:"Scogli e fondali misti della zona di marea del Nord Atlantico; resiste ore fuori dall'acqua.",
+c:"Alghe.",
+z:"Fino a 5 cm.",
+e:"Non si pesca con esca: si raccoglie.",
+t:"Raccolta a mano con la bassa marea.",
+b:"Non praticata."}
+);
+
 </script>
 <script>
 {
-const SEC={m:{n:"Acque salate",sub:"Oceani e mari: dal Mediterraneo all'altura",h:"#mare"},d:{n:"Acque dolci",sub:"Laghi e fiumi: dai torrenti alpini ai grandi fiumi del mondo",h:"#dolce"}};
+const SEC={m:{n:"Acque salate",sub:"Oceani e mari: dal Mediterraneo all'altura",h:"#mare"},d:{n:"Acque dolci",sub:"Laghi e fiumi: dai torrenti alpini ai grandi fiumi del mondo",h:"#dolce"},x:{n:"Molluschi",sub:"Calamari, seppie, polpi, bivalvi e gasteropodi di mare",h:"#molluschi"}};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const slug=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -2039,17 +2424,28 @@ D.forEach((x,i)=>{x.id=slug(x.s);x.i=i;x.k=norm([x.n,x.al||"",x.s,FAM[x.f].n,x.f
 const BY={};D.forEach(x=>BY[x.id]=x);
 const ORDER={};D.forEach(x=>{const k=x.a+x.f;if(!(k in ORDER))ORDER[k]=Object.keys(ORDER).length});
 const list=a=>D.filter(x=>x.a===a).sort((p,q)=>ORDER[p.a+p.f]-ORDER[q.a+q.f]||p.i-q.i);
-const L={m:list("m"),d:list("d")};
+const L={m:list("m"),d:list("d"),x:list("x")};
 
 /* ---------- sagome di riserva ---------- */
 const SH={fus:[.26,"fork"],spa:[.44,"fork"],cer:[.36,"round",{mouth:1}],mug:[.24,"fork"],car:[.32,"deep"],tun:[.32,"lun",{finlets:1}],bil:[.22,"lun",{sword:1}],lam:[.3,"fork",{longd:1}],agu:[.1,"fork",{beak:1}],bar:[.16,"fork"],gad:[.24,"trunc",{barb:1}],sco:[.36,"round",{spiny:1}],tri:[.26,"fork",{pect:1}],mul:[.27,"fork",{barb:2}],zeu:[.62,"round",{spot:1}],lab:[.3,"round"],azz:[.2,"fork"],tra:[.2,"trunc"],tar:[.3,"fork"],cob:[.22,"fork"],bal:[.5,"lun"],gob:[.24,"round"],cip:[.34,"fork",{barb:2}],per:[.32,"fork",{bars:1}],bas:[.34,"trunc",{mouth:1}],luc:[.18,"fork",{duck:1,back:1}],sal:[.26,"trunc",{adip:1,dots:1}],gat:[.25,"trunc",{barb:4,adip:1}],pir:[.6,"fork"],ara:[.2,"round"],tig:[.28,"fork",{bars:0}],ami:[.22,"round",{longd:1}],cha:[.18,"round",{longd:1}]};
 const f1=n=>Math.round(n*10)/10;
 function fishSVG(sh,sec,u){
- const c=sec==="m"?["#8fb3c7","#3c6a86","#dfe9ef"]:["#a9b47c","#56663c","#ece7cf"];
+ const c=sec==="m"?["#8fb3c7","#3c6a86","#dfe9ef"]:sec==="x"?["#d6a99a","#7a4b5a","#f4e6de"]:["#a9b47c","#56663c","#ece7cf"];
  const g=`<defs><linearGradient id="g${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c[1]}"/><stop offset=".55" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[2]}"/></linearGradient></defs>`;
  const fill=`fill="url(#g${u})" stroke="${c[1]}" stroke-width="1"`,fin=`fill="${c[1]}" opacity=".75"`;
  const wrap=s=>`<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${g}<ellipse cx="100" cy="108" rx="70" ry="4" fill="#000" opacity=".08"/>${s}</svg>`;
  if(sh==="ang"||sh==="sci"||sh==="sil")return wrap(`<path d="M16 60 C30 ${sh==="sil"?40:50} 60 ${sh==="sil"?46:52} 110 56 C150 59 175 64 192 70 C175 72 150 70 110 68 C60 66 30 ${sh==="sil"?78:70} 16 60Z" ${fill}/><path d="M${sh==="sil"?120:60} 53 C120 46 170 58 192 70 C170 62 130 58 ${sh==="sil"?120:60} 56Z" ${fin}/><circle cx="27" cy="56" r="2.6" fill="#111"/>${sh==="sil"?`<path d="M18 57 q-6 -10 -2 -22 M18 63 q-8 6 -10 14" stroke="${c[1]}" stroke-width="1.4" fill="none"/>`:""}`);
+ if(sh==="cal")return wrap(`${[0,1,2,3,4].map(i=>`<path d="M62 ${56+i*2} Q36 ${50+i*5} ${14+i*3} ${46+i*7}" stroke="${c[1]}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`).join("")}<path d="M62 58 Q30 64 8 82" stroke="${c[1]}" stroke-width="1.6" fill="none"/><path d="M62 60 Q34 70 12 92" stroke="${c[1]}" stroke-width="1.6" fill="none"/><ellipse cx="66" cy="60" rx="12" ry="10" ${fill}/><path d="M74 50 L160 50 Q186 56 194 60 Q186 64 160 70 L74 70Z" ${fill}/><path d="M140 50 L176 34 L192 60Z M140 70 L176 86 L192 60Z" ${fin}/><circle cx="64" cy="57" r="3.4" fill="#111"/>${[90,105,120,135].map(x=>`<circle cx="${x}" cy="${58+(x%3)}" r="1.6" fill="${c[1]}" opacity=".6"/>`).join("")}`);
+ if(sh==="sep")return wrap(`${[0,1,2,3].map(i=>`<path d="M46 ${56+i*3} Q30 ${54+i*5} ${18+i*2} ${50+i*7}" stroke="${c[1]}" stroke-width="3" fill="none" stroke-linecap="round"/>`).join("")}<ellipse cx="116" cy="60" rx="66" ry="32" fill="${c[1]}" opacity=".5"/><ellipse cx="116" cy="60" rx="60" ry="26" ${fill}/><ellipse cx="52" cy="60" rx="12" ry="11" ${fill}/><circle cx="52" cy="56" r="3.5" fill="#111"/>${[0,1,2,3,4,5,6].map(i=>`<path d="M${80+i*10} 40 q4 20 0 40" stroke="${c[1]}" stroke-width="2" fill="none" opacity=".45"/>`).join("")}`);
+ if(sh==="pol")return wrap(`${[0,1,2,3,4,5,6,7].map(i=>{const x=72+i*8,d=(i-3.5)*12;return`<path d="M${x} 58 C${x+d*.3} 80 ${x+d} 84 ${f1(x+d*1.6)} ${100+(i%2)*6} q${i<4?-8:8} 4 ${i<4?-6:6} -6" stroke="${c[1]}" stroke-width="${6-Math.abs(i-3.5)*.5}" fill="none" stroke-linecap="round"/>`}).join("")}<ellipse cx="100" cy="38" rx="30" ry="26" ${fill}/><ellipse cx="100" cy="60" rx="22" ry="8" ${fill}/><circle cx="90" cy="56" r="3" fill="#111"/><circle cx="110" cy="56" r="3" fill="#111"/>`);
+ if(sh==="biv"||sh==="ost"||sh==="pet"||sh==="cozza"){
+  if(sh==="cozza")return wrap(`<path d="M30 70 C40 40 120 26 176 36 C186 44 184 60 170 68 C120 86 60 90 30 70Z" fill="#2c3440" stroke="#14181e" stroke-width="1.2"/>${[0,1,2,3].map(i=>`<path d="M${40+i*8} 70 C${70+i*10} ${56-i*4} ${130+i*6} ${44+i*2} ${168-i*4} ${42+i*4}" stroke="#4d5a6a" stroke-width="1" fill="none"/>`).join("")}`);
+  const ribs=sh==="pet"?[...Array(13)].map((_,i)=>{const a=Math.PI*(0.15+i*0.7/12);return`<path d="M100 98 L${f1(100-Math.cos(a)*78)} ${f1(98-Math.sin(a)*78)}" stroke="${c[1]}" stroke-width="2.2" opacity=".55"/>`}).join(""):[0,1,2,3,4].map(i=>`<path d="M${36+i*8} ${80-i*3} Q100 ${24+i*12} ${164-i*8} ${80-i*3}" stroke="${c[1]}" stroke-width="1.4" fill="none" opacity=".6"/>`).join("");
+  const shell=sh==="pet"?`M100 98 L26 60 Q30 22 100 18 Q170 22 174 60Z`:sh==="ost"?`M34 82 C20 60 40 26 80 22 C130 14 172 34 170 62 C168 86 140 98 100 96 C70 96 44 94 34 82Z`:`M100 98 C60 98 26 86 28 64 C30 36 68 18 100 18 C132 18 170 36 172 64 C174 86 140 98 100 98Z`;
+  return wrap(`<path d="${shell}" ${fill}/>${ribs}${sh==="pet"?`<path d="M84 98 L70 108 L130 108 L116 98Z" ${fill}/>`:`<path d="M90 20 q10 -8 20 0" stroke="${c[1]}" stroke-width="2" fill="none"/>`}`)}
+ if(sh==="can")return wrap(`<rect x="14" y="48" width="172" height="24" rx="10" ${fill}/>${[30,60,90,120,150].map(x=>`<path d="M${x} 49 v22" stroke="${c[1]}" stroke-width="1" opacity=".4"/>`).join("")}<path d="M186 56 q10 -2 12 4 M186 64 q10 2 12 -4" stroke="${c[1]}" stroke-width="2" fill="none"/>`);
+ if(sh==="gas")return wrap(`<path d="M40 96 C40 70 70 50 100 44 L150 14 L140 52 C150 70 140 96 112 100 C80 104 48 106 40 96Z" ${fill}/>${[0,1,2,3].map(i=>`<path d="M${70+i*18} ${72-i*14} q14 6 ${24-i*2} -6" stroke="${c[1]}" stroke-width="1.6" fill="none"/>`).join("")}<ellipse cx="72" cy="88" rx="16" ry="10" fill="${c[2]}" stroke="${c[1]}"/>`);
+ if(sh==="pat")return wrap(`<ellipse cx="100" cy="88" rx="80" ry="12" fill="${c[1]}" opacity=".35"/><path d="M22 88 Q60 30 104 28 Q146 32 178 88Z" ${fill}/>${[...Array(11)].map((_,i)=>{const x=28+i*15;return`<path d="M104 30 L${x} 88" stroke="${c[1]}" stroke-width="1.2" opacity=".5"/>`}).join("")}`);
  if(sh==="raz")return wrap(`<path d="M100 22 L168 58 L104 84 L96 84 L32 58Z" ${fill}/><path d="M100 84 L102 112" stroke="${c[1]}" stroke-width="2.4"/><circle cx="92" cy="40" r="2.4" fill="#111"/><circle cx="108" cy="40" r="2.4" fill="#111"/>`);
  if(sh==="pia"||sh==="rom")return wrap(`<ellipse cx="96" cy="60" rx="${sh==="rom"?66:72}" ry="${sh==="rom"?40:30}" ${fill}/><ellipse cx="96" cy="60" rx="${sh==="rom"?72:78}" ry="${sh==="rom"?45:34}" fill="none" stroke="${c[1]}" stroke-width="5" opacity=".45" stroke-dasharray="2 2"/><path d="M168 60 L192 46 L192 74Z" ${fin}/><circle cx="40" cy="50" r="3" fill="#111"/><circle cx="46" cy="42" r="3" fill="#111"/>`);
  if(sh==="squ"||sh==="sto")return wrap(`<path d="M10 62 C30 46 70 44 120 50 C150 53 165 56 172 58 L194 30 L184 62 L192 78 L170 66 C140 72 80 76 40 72 C24 70 14 66 10 62Z" ${fill}/><path d="M84 47 L98 22 L108 50Z" ${fin}/><path d="M60 72 L74 90 L82 74Z" ${fin}/><circle cx="30" cy="57" r="2.6" fill="#111"/>${sh==="squ"?[44,48,52,56].map(x=>`<path d="M${x} 58 v10" stroke="${c[1]}" stroke-width="1"/>`).join(""):[40,60,80,100,120,140].map(x=>`<path d="M${x} 52 l4 -4 l4 4z" fill="${c[2]}" stroke="${c[1]}" stroke-width=".7"/>`).join("")+`<path d="M18 68 v8 M24 69 v8" stroke="${c[1]}" stroke-width="1.2"/>`}`);
@@ -2109,14 +2505,15 @@ const io="IntersectionObserver" in window?new IntersectionObserver(es=>{for(cons
 function observe(root){root.querySelectorAll(".ph").forEach(el=>{if(io)io.observe(el);else{queue.push(el);pump()}})}
 
 /* ---------- elenco ---------- */
-const st={m:{q:"",f:""},d:{q:"",f:""}};let sec="m";
+const st={m:{q:"",f:""},d:{q:"",f:""},x:{q:"",f:""}};let sec="m";
 function famOptions(){const fs=[...new Set(L[sec].map(x=>x.f))];$("#fFam").innerHTML=`<option value="">Tutte le famiglie (${fs.length})</option>`+fs.map(f=>`<option value="${f}">${FAM[f].n} (${L[sec].filter(x=>x.f===f).length})</option>`).join("");$("#fFam").value=st[sec].f}
 function renderList(){
  const q=norm(st[sec].q.trim()),ff=st[sec].f;
  const r=L[sec].filter(x=>(!ff||x.f===ff)&&(!q||q.split(/\s+/).every(w=>x.k.includes(w))));
  const groups=[];for(const x of r){const g=groups[groups.length-1];if(g&&g.f===x.f)g.s.push(x);else groups.push({f:x.f,s:[x]})}
+ $("#secnote").hidden=sec!=="x";
  $("#count").textContent=r.length===L[sec].length?`${r.length} specie in ${groups.length} famiglie`:`${r.length} specie su ${L[sec].length}`;
- $("#list").innerHTML=r.length?groups.map(g=>{const F=FAM[g.f];return`<section class="fam" id="fam-${g.f}"><header><h2>${F.n} <i>${g.f[0].toUpperCase()+g.f.slice(1)}</i> <span>${g.s.length} specie</span></h2><p>${esc(F.d)}</p></header><div class="grid">${g.s.map(x=>`<a class="card" href="#p/${x.id}">${photo(x,0,"c"+x.i)}<div class="tx"><span class="it">${esc(x.n)}</span><span class="la">${esc(x.s)}</span><span class="sz">${esc(x.z.split(";")[0])}</span></div></a>`).join("")}</div></section>`}).join(""):`<p class="empty">Nessuna specie trovata. Prova con un altro nome.</p>`;
+ $("#list").innerHTML=r.length?groups.map(g=>{const F=FAM[g.f];return`<section class="fam" id="fam-${g.f}"><header><h2>${F.cl?`<em>${F.cl}</em>`:""}${F.n} <i>${g.f[0].toUpperCase()+g.f.slice(1)}</i> <span>${g.s.length} specie</span></h2><p>${esc(F.d)}</p></header><div class="grid">${g.s.map(x=>`<a class="card" href="#p/${x.id}">${photo(x,0,"c"+x.i)}<div class="tx"><span class="it">${esc(x.n)}</span><span class="la">${esc(x.s)}</span><span class="sz">${esc(x.z.split(";")[0].replace(/\.$/,""))}</span></div></a>`).join("")}</div></section>`}).join(""):`<p class="empty">Nessuna specie trovata. Prova con un altro nome.</p>`;
  observe($("#list"))}
 $("#q").addEventListener("input",e=>{st[sec].q=e.target.value;renderList()});
 $("#fFam").addEventListener("change",e=>{st[sec].f=e.target.value;renderList()});
@@ -2137,25 +2534,26 @@ function renderDet(id){const x=BY[id];if(!x){location.hash=SEC[sec].h;return}
  <figure class="photo">${photo(x,1,"d"+x.i)}<figcaption>Disegno schematico della forma tipica della famiglia; la foto si carica quando sei in rete.</figcaption></figure>
  <div class="stat"><div><b>Dimensione massima</b><span>${esc(x.z)}</span></div></div>
  ${x.x?`<div class="warnbox"><b>Attenzione.</b> ${esc(x.x)}</div>`:""}
+ ${F.biv?`<div class="warnbox"><b>Rischio sanitario.</b> Mangia solo bivalvi provenienti da zone controllate o venduti con l'etichetta sanitaria e cuocili a fondo: quelli raccolti in zone non classificate possono trasmettere epatite A, norovirus e tossine delle alghe.</div>`:""}
  <div class="cols">
   <section class="wide"><h3>${ic("d")}Descrizione</h3><p>${esc(x.d)}</p></section>
   <section><h3>${ic("h")}Habitat e abitudini</h3><p>${esc(x.h)}</p></section>
   <section><h3>${ic("c")}Alimentazione in natura</h3><p>${esc(x.c)}</p></section>
-  <section class="wide fish"><h3>${ic("e")}Esca preferita</h3><p>${esc(x.e)}</p></section>
-  <section class="fish"><h3>${ic("t")}Pesca da terra</h3><p>${esc(x.t)}</p></section>
-  <section class="fish"><h3>${ic("b")}Pesca da barca</h3><p>${esc(x.b)}</p></section>
+  <section class="wide fish"><h3>${ic("e")}${x.a==="x"?"Esca o metodo di cattura":"Esca preferita"}</h3><p>${esc(x.e)}</p></section>
+  <section class="fish"><h3>${ic("t")}${x.a==="x"?"Da terra (pesca o raccolta)":"Pesca da terra"}</h3><p>${esc(x.t)}</p></section>
+  <section class="fish"><h3>${ic("b")}${x.a==="x"?"Da barca o in immersione":"Pesca da barca"}</h3><p>${esc(x.b)}</p></section>
  </div>
- ${sib.length>1?`<div class="sib"><h3>Altre specie dei ${F.n}</h3><ul>${sib.map(y=>`<li${y===x?' aria-current="true"':""}><a href="#p/${y.id}">${esc(y.n)}<i>${esc(y.s)}</i></a></li>`).join("")}</ul></div>`:""}
+ ${sib.length>1?`<div class="sib"><h3>Altre specie della famiglia ${F.n}</h3><ul>${sib.map(y=>`<li${y===x?' aria-current="true"':""}><a href="#p/${y.id}">${esc(y.n)}<i>${esc(y.s)}</i></a></li>`).join("")}</ul></div>`:""}
  <nav class="pn" aria-label="Scorri le specie">${pv?`<a href="#p/${pv.id}">← ${esc(pv.n)}</a>`:"<span></span>"}${nx?`<a href="#p/${nx.id}">${esc(nx.n)} →</a>`:""}</nav>`;
  observe($("#v-det"))}
 
 /* ---------- navigazione ---------- */
 const scrollMem={};let lastView="";
 function route(){const h=location.hash.slice(1)||"mare";let v;
- if(h.startsWith("p/")){const x=BY[h.slice(2)];if(x)sec=x.a;v="det"}else if(h==="info")v="info";else{sec=h==="dolce"?"d":"m";v="list"}
+ if(h.startsWith("p/")){const x=BY[h.slice(2)];if(x)sec=x.a;v="det"}else if(h==="info")v="info";else{sec=h==="dolce"?"d":h==="molluschi"?"x":"m";v="list"}
  if(lastView==="list")scrollMem[lastSec]=scrollY;
  document.documentElement.dataset.sec=v==="info"?"m":sec;
- $("#sub").textContent=v==="info"?"Specie ittiche di mare e d'acqua dolce":SEC[sec].sub;
+ $("#sub").textContent=v==="info"?"Pesci di mare e d'acqua dolce e molluschi":SEC[sec].sub;
  document.querySelectorAll("nav.tabs a").forEach(a=>a.toggleAttribute("aria-current",v==="info"?a.dataset.v==="info":a.dataset.v===sec));
  document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
  if(v==="list"){$("#q").value=st[sec].q;famOptions();renderList();requestAnimationFrame(()=>scrollTo(0,scrollMem[sec]||0))}
@@ -2165,7 +2563,7 @@ function route(){const h=location.hash.slice(1)||"mare";let v;
  lastView=v;lastSec=sec}
 let lastSec="m";
 addEventListener("hashchange",route);
-$("#nm").textContent=L.m.length;$("#nd").textContent=L.d.length;$("#tot").textContent=D.length;
+$("#nm").textContent=L.m.length;$("#nd").textContent=L.d.length;$("#nx").textContent=L.x.length;$("#tot").textContent=D.length;
 
 /* ---------- scarica foto per l'offline ---------- */
 $("#dl").addEventListener("click",async()=>{
